@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Plexdata Settings Serialization</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: "Calibri", sans-serif;
+        }
+
+        .navbar {
+            height: 100%;
+            width: 180px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #262626;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+
+        .navbar a {
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size: 1.6em;
+            color: #818181;
+            display: block;
+        }
+
+        .navbar a:hover {
+            color: #F1F1F1;
+        }
+
+        .content {
+            margin-left: 165px;
+            font-size: 1.4em;
+            padding: 10px 50px;
+        }
+
+        code {
+            font-family: "Consolas", monospace;
+        }
+
+        pre {
+            padding: 20px;
+            font-size: 0.7em;
+            background-color: #FCFCFC;
+            border: 1px solid #C4C4C4;
+            overflow-x: auto;
+        }
+
+        dd {
+            padding-bottom: 1em;
+        }
+
+        .dd-last {
+            padding-bottom: 0em;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#overview">Overview</a>
+        <a href="#licensing">Licensing</a>
+        <a href="#installation">Installation</a>
+        <a href="#introduction">Introduction</a>
+        <a href="#locations">Locations</a>
+        <a href="#models">Models</a>
+        <a href="#reading">Reading</a>
+        <a href="#writing">Writing</a>
+        <a href="#di-handling">DI&#8209;Handling</a>
+        <a href="#limitation">Limitation</a>
+        <a href="#known-issues">Known Issues</a>
+    </div>
+    <div class="content">
+
+        <header><center><h1>Plexdata Settings Serialization</h1></center></header>
+
+        <h2 id="overview">Overview</h2>
+
+        <p>
+            The <em>Plexdata Settings Serialization</em> represents an alternative to the standard settings serialization mechanism.
+        </p>
+        <p>
+            Main feature of this library is that users are able to define the path as well as the extension of their settings file.
+        </p>
+        <p>
+            As extension to the standard settings handling, this library allows to put the settings into the directory of the executable.
+            This is very interesting for so called <em>Portable Apps</em>, which usually manage all their data within one and the same
+            directory.
+        </p>
+        <p>
+            Another feature of this library is the possibility to control the format of the settings file. At the moment, reading and writing
+            of settings files in JSON format as well as in XML format is supported. Other formats like for example <em>old&#8209;school</em>
+            INI files may follow in a later version.
+        </p>
+
+        <h2 id="licensing">Licensing</h2>
+
+        <p>
+            The software has been published under the terms of
+        </p>
+
+        <h3>MIT License</h3>
+
+        <p>
+            Copyright &copy; 2021 <a target="_blank" href="http://www.plexdata.de/">plexdata.de</a>
+        </p>
+        <p lang="en-us">
+            Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+            associated documentation files (the <q>Software</q>), to deal in the Software without restriction, including
+            without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+            sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject
+            to the following conditions:
+        </p>
+        <p>
+            The above copyright notice and this permission notice shall be included in all copies or substantial
+            portions of the Software.
+        </p>
+        <p lang="en-us">
+            THE SOFTWARE IS PROVIDED <q>AS IS</q>, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+            TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+            THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+            CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+            IN THE SOFTWARE.
+        </p>
+
+        <h2 id="installation">Installation</h2>
+
+        <p>
+            The binary files of the <em>Plexdata Settings Serialization</em> are provided as <em>NuGet</em> package and can be obtained from
+            <a target="_blank" href="https://www.nuget.org/packages/Plexdata.Settings.Serialization/">https://www.nuget.org/packages/Plexdata.Settings.Serialization</a>.
+            How to install this <em>NuGet</em> package manually is explained there.
+        </p>
+        <p>
+            Using the <em>Plexdata Settings Serialization</em> together with <em>Visual Studio</em>.
+        </p>
+        <ul>
+            <li>
+                Create a new <em>.NET Framework</em> or a <em>.NET Standard</em> or a <em>.NET Core</em> project.
+            </li>
+            <li>
+                Open menu <em>Tools &rarr; NuGet Package Manager</em> and choose command <em>Manage NuGet Packages for Solution&hellip;</em>.
+                <ul>
+                    <li>
+                        Alternatively, simply right&#8209;click the project in the <em>Solution Explorer</em> and choose command 
+                        <em>Manage NuGet Packages&hellip;</em>.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Switch to <em>Browse</em> page and in the search box just type <code>plexdata.settings.serialization</code>.
+            </li>
+            <li>
+                From the shown list select <code>Plexdata.Settings.Serialization</code> and click button <code>[Install]</code> at the right.
+            </li>
+            <li>
+                Confirm the dialog box and that&rsquo;s it.
+            </li>
+        </ul>
+        <p>
+            Additionally, all releases can be downloaded from <em>GitHub</em>. Please visit page
+            <a target="_blank" href="https://github.com/akesseler/Plexdata.Settings.Serialization/releases">Plexdata Settings Serialization</a>
+            to find all available versions.
+        </p>
+
+        <h2 id="introduction">Introduction</h2>
+
+        <p>
+            <em>Visual Studio</em> provides a very powerful handling of managing application settings. But unfortunately it is not really
+            possible to load and save settings that are located in the same folder where the executing assembly is located. This makes it
+            almost impossible to write so&#8209;called <em>Portable Apps</em>, which usually manage all operations within one and the same
+            directory.
+        </p>
+        <p>
+            Another issue with the standard <em>Visual Studio</em> settings management is the fact that controlling the name of the settings
+            file as well as the format of the settings file is also not really possible.
+        </p>
+
+        <p>
+            All these features will become possible with this package.
+        </p>
+
+        <h2 id="locations">Locations</h2>
+
+        <p>
+            In this section please find an overview of possible storage locations and how to affect them.
+        </p>
+
+        <dl>
+            <dt><code>DefaultLocation</code></dt>
+            <dd>
+                The default storage location. In this case the folder of <code>ExecutableFolder</code> is used.
+            </dd>
+            <dt><code>ExecutableFolder</code></dt>
+            <dd>
+                The folder of the executing assembly. This folder is used only if writing files is permitted. In case of writing
+                is not permitted the folder referenced by <code>FallbackLocation</code> is taken instead.
+            </dd>
+            <dt><code>FallbackLocation</code></dt>
+            <dd>
+                The fallback storage location. This folder is used in case of writing files into chosen folder is not permitted.
+                The folder of <code>LocalApplicationData</code> is used for this purpose.
+            </dd>
+            <dt><code>LocalApplicationData</code></dt>
+            <dd>
+                The local application data folder. The resulting path should look like:
+                <code>&lt;drive&gt;\Users\&lt;username&gt;\AppData\Local\&lt;company&gt;\&lt;product&gt;\[&lt;version&gt;\]&lt;filename&gt;.&lt;extension&gt;</code>
+            </dd>
+            <dt><code>ApplicationData</code></dt>
+            <dd>
+                The standard application data folder. The resulting path should look like:
+                <code>&lt;drive&gt;\Users\&lt;username&gt;\AppData\Roaming\&lt;company&gt;\&lt;product&gt;\[&lt;version&gt;\]&lt;filename&gt;.&lt;extension&gt;</code>
+            </dd>
+            <dt><code>CommonApplicationData</code></dt>
+            <dd class="dd-last">
+                The common application data folder. The resulting path should look like:
+                <code>&lt;drive&gt;\ProgramData\&lt;company&gt;\&lt;product&gt;\[&lt;version&gt;\]&lt;filename&gt;.&lt;extension&gt;</code>
+            </dd>
+        </dl>
+
+        <p>
+            The variables <code>&lt;company&gt;</code> and <code>&lt;product&gt;</code> in the above example paths come from the executing
+            assembly. The <code>&lt;version&gt;</code> instead is optional and must be explicitly enabled via property <code>IsVersionized</code>
+            of <code>ISettingsOptions</code>. See below from where these path parts are taken in detail.
+        </p>
+
+        <dl>
+            <dt><code>&lt;company&gt;</code></dt>
+            <dd>
+                The company descriptor comes either from the <em>Assembly Company Attribute</em> or (if not exist) is taken from the first part
+                of the namespace of the declaring type of the entry point of the executing assembly. This is usually the namespace of class
+                <code>Program</code>.
+            </dd>
+            <dt><code>&lt;product&gt;</code></dt>
+            <dd>
+                The product descriptor comes either from the <em>Assembly Product Attribute</em> or (if not exist) represents the file name of
+                the executing assembly but without its file extension.
+            </dd>
+            <dt><code>&lt;version&gt;</code></dt>
+            <dd>
+                The version descriptor comes either from the <em>Assembly Version Attribute</em> or (if not exist) from the <em>
+                    Assembly File
+                    Version Attribute
+                </em>. The version descriptor <code>0.0.0.0</code> is taken in case of none of these attributes exists.
+            </dd>
+            <dt><code>&lt;filename&gt;</code></dt>
+            <dd>
+                The filename descriptor is nothing else but the name of the executing assembly but without its extension.
+            </dd>
+            <dt><code>&lt;extension&gt;</code></dt>
+            <dd class="dd-last">
+                The extension descriptor comes from property <code>Extension</code> of <code>ISettingsOptions</code>. Its default value is
+                <code>.conf</code> if it hasn&rsquo;t be changed explicitly.
+            </dd>
+        </dl>
+
+        <h2 id="models">Models</h2>
+
+        <p>
+            Models or better data models are user defined classes that are used as generic parameter for interfaces <code>ISettingsReader</code>
+            and <code>ISettingsWriter</code>.
+        </p>
+        <p>
+            Because of the internal usage of <a href="https://www.newtonsoft.com/json" target="_blank">Newtonsoft&rsquo;s Json.NET</a> package
+            it becomes possible to tag all own model properties with attribute <code>JsonProperty</code>. But to use this feature it might be 
+            necessary to include this package in an own project. But keep in mind, the <em>Plexdata Settings Serialization</em> works as well 
+            if this package is not manually included in user projects.
+        </p>
+        <p>
+            Especially for XML serialization another attribute of <em>Newtonsoft&rsquo;s Json.NET</em> package is used by 
+            <em>Plexdata Settings Serialization</em>. This is attribute <code>JsonObject</code>. By using this attribute users can modify the 
+            name of the root object within the resulting XML file.
+        </p>
+        <p>
+            Below find an example model that can be used together with <em>Plexdata Settings Serialization</em> and which tags its properties with
+            attributes of <em>Newtonsoft&rsquo;s Json.NET</em> package.
+        </p>
+
+<pre><code>[JsonObject("program-settings")]
+public class ProgramSettings
+{
+    [JsonProperty("application-title")]
+    public String Title { get; set; }
+
+    [JsonProperty("main-window-position")]
+    public Point Location { get; set; }
+
+    [JsonProperty("main-window-size")]
+    public Size Dimension { get; set; }
+}</code></pre>
+
+        <h2 id="reading">Reading</h2>
+
+        <p>
+            In this section users may find an interesting example of how to read a settings file. The example implementation below assumes the
+            existence of data model <code>ProgramSettings</code> from section above.
+        </p>
+
+<pre><code>class Program
+{
+    static void Main(String[] args)
+    {
+        var options = SettingsFactory.Create&lt;ISettingsOptions&gt;(
+            SettingsPattern.JsonPattern, StorageLocation.ExecutableFolder, "program.settings");
+
+        var reader = SettingsFactory.Create&lt;ISettingsReader&lt;ProgramSettings&gt;&gt;();
+
+        if (!reader.TryRead(options, out ProgramSettings settings))
+        {
+            settings = new ProgramSettings();
+        }
+    }
+}
+</code></pre>
+
+        <p>
+            As shown above, an instance of <code>ISettingsOptions</code> is created and configured as first. This configuration assumes a JSON
+            settings file that is located within the directory of the executable file. Furthermore, this settings file uses a file extension of
+            <code>program.settings</code>.
+        </p>
+
+        <p>
+            As next an instance of <code>ISettingsReader</code> is created. Thereafter it is tried to read the settings file and, if it fails,
+            a new instances of user defined <code>ProgramSettings</code> is created manually.
+        </p>
+
+        <h2 id="writing">Writing</h2>
+
+        <p>
+            In this section users may find an interesting example of how to write a settings file. The example implementation below assumes the
+            existence of the same data model <code>ProgramSettings</code> as used in section above.
+        </p>
+
+<pre><code>class Program
+{
+    static void Main(String[] args)
+    {
+        var options = SettingsFactory.Create&lt;ISettingsOptions&gt;(
+            SettingsPattern.JsonPattern, StorageLocation.ExecutableFolder, "program.settings");
+
+        ProgramSettings settings = new ProgramSettings();
+
+        var writer = SettingsFactory.Create&lt;ISettingsWriter&lt;ProgramSettings&gt;&gt;();
+
+        writer.TryWrite(options, settings);
+    }
+}</code></pre>
+
+        <p>
+            As shown above, an instance of <code>ISettingsOptions</code> is created and configured as first. This configuration assumes a JSON
+            settings file that has to be saved into the directory of the executable file. Furthermore, this settings file uses a file extension of
+            <code>program.settings</code>.
+        </p>
+
+        <p>
+            As next an instance of <code>ISettingsWriter</code> is created. Thereafter it is tried to write the settings file.
+        </p>
+
+        <h2 id="di-handling">DI&#8209;Handling</h2>
+
+        <p>
+            The handling of dependency injection is indeed a common issue and is discussed in this section. Additionally note, for the example 
+            code in here package <a href="http://unitycontainer.org/" target="_blank">Unity</a> is used as dependency injection container.
+        </p>
+
+        <p>
+            The first code snippet below shows a typical extension method for interface <code>IUnityContainer</code> to be used to perform all
+            needed dependency injection registrations.
+        </p>
+
+<pre><code>public static IUnityContainer PerformRegistration(this IUnityContainer container)
+{
+    if (container is null)
+    {
+        return container;
+    }
+
+    container.RegisterFactory&lt;ISettingsOptions&gt;("ProgramSettingsOptions",
+        x => SettingsFactory.Create&lt;ISettingsOptions&gt;(
+            SettingsPattern.JsonPattern, StorageLocation.ExecutableFolder, "program.settings"
+        ));
+
+    container.RegisterFactory&lt;ISettingsReader&lt;ProgramSettings&gt;&gt;("ProgramSettingsReader",
+        x => SettingsFactory.Create&lt;ISettingsReader&lt;ProgramSettings&gt;&gt;());
+
+    container.RegisterFactory&lt;ISettingsWriter&lt;ProgramSettings&gt;&gt;("ProgramSettingsWriter",
+        x => SettingsFactory.Create&lt;ISettingsWriter&lt;ProgramSettings&gt;&gt;());
+
+    container.RegisterSingleton&lt;IProgramSettingsManager, ProgramSettingsManager&gt;();
+
+    return container;
+}
+</code></pre>
+
+        <p>
+            The first three calls exemplarily show how to configure the factory registrations. Furthermore, each of the factory registrations
+            uses a special factory name just to ensure the uniqueness of all <code>ProgramSettings</code> depended classes.
+        </p>
+
+        <p lang="en-us">
+            The last call instead registers a <q>Singleton</q> that must be implemented by user code. Managing all settings related tasks is
+            the job of this class. Furthermore, this manager class gets all settings related instances via constructor injection. See next code
+            snippet for such an example implementation.
+        </p>
+
+<pre><code>internal class ProgramSettingsManager : IProgramSettingsManager
+{
+    private readonly ISettingsOptions options = null;
+    private readonly ISettingsReader&lt;ProgramSettings&gt; reader = null;
+    private readonly ISettingsWriter&lt;ProgramSettings&gt; writer = null;
+    private ProgramSettings instance = null;
+
+    public ProgramSettingsManager(
+        [Dependency("ProgramSettingsOptions")] ISettingsOptions options,
+        [Dependency("ProgramSettingsReader")] ISettingsReader&lt;ProgramSettings&gt; reader,
+        [Dependency("ProgramSettingsWriter")] ISettingsWriter&lt;ProgramSettings&gt; writer)
+    {
+        this.options = options ?? throw new ArgumentNullException(nameof(options));
+        this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
+        this.writer = writer ?? throw new ArgumentNullException(nameof(writer));
+
+        this.Instance = new ProgramSettings();
+    }
+
+    public ProgramSettings Instance { get; private set; }
+
+    public Boolean Load()
+    {
+        if (this.reader.TryRead(this.options, out ProgramSettings result))
+        {
+            this.Instance = result;
+            return true;
+        }
+
+        return false;
+    }
+
+    public Boolean Save()
+    {
+        return this.writer.TryWrite(this.options, this.Instance);
+    }
+}</code></pre>
+
+        <p>
+            In contrast to constructor injection, the way of property injection would be possible as well. The code snippet below demonstrates it.
+        </p>
+
+<pre><code>internal class ProgramSettingsManager : IProgramSettingsManager
+{
+    public ProgramSettingsManager()
+    {
+        this.Instance = new ProgramSettings();
+    }
+
+    [Dependency("ProgramSettingsOptions")]
+    public ISettingsOptions Options { private get; set; }
+
+    [Dependency("ProgramSettingsReader")]
+    public ISettingsReader&lt;ProgramSettings&gt; Reader { private get; set; }
+
+    [Dependency("ProgramSettingsWriter")]
+    public ISettingsWriter&lt;ProgramSettings&gt; Writer { private get; set; }
+
+    public ProgramSettings Instance { get; private set; }
+
+    public Boolean Load()
+    {
+        if (this.Reader.TryRead(this.Options, out ProgramSettings result))
+        {
+            this.Instance = result;
+            return true;
+        }
+
+        return false;
+    }
+
+    public Boolean Save()
+    {
+        return this.Writer.TryWrite(this.Options, this.Instance);
+    }
+}</code></pre>
+
+        <h2 id="limitation">Limitation</h2>
+
+        <p>
+            Not known at the moment.
+        </p>
+
+
+        <h2 id="known-issues">Known Issues</h2>
+
+        <p>
+            Not known at the moment.
+        </p>
+</body>
+</html>
