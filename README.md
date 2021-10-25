@@ -1,11 +1,11 @@
 <p align="center">
-  <a href="https://github.com/akesseler/Plexdata.Settings.Serialization/blob/main/LICENSE.md" alt="license">
+  <a href="https://github.com/akesseler/Plexdata.Settings.Serialization/blob/master/LICENSE.md" alt="license">
     <img src="https://img.shields.io/github/license/akesseler/Plexdata.Settings.Serialization.svg" />
   </a>
   <a href="https://github.com/akesseler/Plexdata.Settings.Serialization/releases/latest" alt="latest">
     <img src="https://img.shields.io/github/release/akesseler/Plexdata.Settings.Serialization.svg" />
   </a>
-  <a href="https://github.com/akesseler/Plexdata.Settings.Serialization/archive/main.zip" alt="main">
+  <a href="https://github.com/akesseler/Plexdata.Settings.Serialization/archive/master.zip" alt="master">
     <img src="https://img.shields.io/github/languages/code-size/akesseler/Plexdata.Settings.Serialization.svg" />
   </a>
   <a href="https://akesseler.github.io/Plexdata.Settings.Serialization" alt="docs">
@@ -147,7 +147,7 @@ The software has been published under the terms of _MIT License_.
 
 The latest release can be obtained from [https://github.com/akesseler/Plexdata.Settings.Serialization/releases/latest](https://github.com/akesseler/Plexdata.Settings.Serialization/releases/latest).
 
-The main branch can be downloaded as ZIP from [https://github.com/akesseler/Plexdata.Settings.Serialization/archive/main.zip](https://github.com/akesseler/Plexdata.Settings.Serialization/archive/main.zip).
+The main branch can be downloaded as ZIP from [https://github.com/akesseler/Plexdata.Settings.Serialization/archive/master.zip](https://github.com/akesseler/Plexdata.Settings.Serialization/archive/master.zip).
 
 ### Documentation
 
