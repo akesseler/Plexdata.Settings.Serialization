@@ -2,20 +2,23 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>plexdata.de</Authors>
     <Description>This library represents a helper for loading and saving settings files either as JSON or as XML.</Description>
-    <Copyright>Copyright © 2021 - plexdata.de</Copyright>
+    <Copyright>Copyright © 2023 - plexdata.de</Copyright>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/akesseler/Plexdata.Settings.Serialization</PackageProjectUrl>
     <PackageIcon>icon.png</PackageIcon>
     <PackageIconUrl />
     <PackageTags>settings loading saving load save JSON XML</PackageTags>
     <PackageReleaseNotes>See project history under https://github.com/akesseler/Plexdata.Settings.Serialization/blob/master/code/src/HISTORY.md</PackageReleaseNotes>
-    <AssemblyVersion>1.0.0</AssemblyVersion>
-    <FileVersion>1.0.0</FileVersion>
+    <AssemblyVersion>1.0.1</AssemblyVersion>
+    <FileVersion>1.0.1</FileVersion>
     <AssemblyName>Plexdata.Settings.Serialization</AssemblyName>
     <RootNamespace>Plexdata.Utilities.Settings</RootNamespace>
+    <PackageReadmeFile>publish-readme.md</PackageReadmeFile>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/akesseler/Plexdata.Settings.Serialization</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -39,6 +42,10 @@
     <None Include="..\..\..\LICENSE.md">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
+    </None>
+    <None Include="..\publish-readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 
